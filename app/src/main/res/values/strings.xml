@@ -23,4 +23,8 @@
     <string name="big_movie_poster_text">big movie poster</string>
     <string name="actors_text">Actors</string>
     <string name="summary_text">Summary</string>
+    <string name="movie_image_text">movie image</string>
+    <string name="movie_stars_text">movie stars</string>
+    <string name="score_text">Score</string>
+    <string name="title_text">Title</string>
 </resources>

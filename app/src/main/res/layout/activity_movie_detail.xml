@@ -47,7 +47,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/poster_big_img"
-                    app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+                    app:shapeAppearanceOverlay="@style/roundedImageView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
