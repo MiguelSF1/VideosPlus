@@ -7,9 +7,20 @@
     <string name="username_input_hint">Username</string>
     <string name="best_rated_movies">Best Rated Movies</string>
     <string name="best_rated_shows">Best Rated Shows</string>
-    <string name="search_text">Search Movies...</string>
+    <string name="search_text">Search Movies&#8230;</string>
     <string name="home_button_description">home</string>
     <string name="movies_button_description">movies</string>
     <string name="shows_button_description">shows</string>
     <string name="downloads_button_description">downloads</string>
+    <string name="favorite_text">favorite</string>
+    <string name="arrow_back_text">arrow_back</string>
+    <string name="movie_actor_info_text">test</string>
+    <string name="movie_duration_text">0</string>
+    <string name="movie_rating_text">0</string>
+    <string name="movie_release_text">0</string>
+    <string name="movie_summary_text">test</string>
+    <string name="movie_title_text">Title</string>
+    <string name="big_movie_poster_text">big movie poster</string>
+    <string name="actors_text">Actors</string>
+    <string name="summary_text">Summary</string>
 </resources>

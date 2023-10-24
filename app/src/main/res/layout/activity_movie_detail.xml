@@ -10,21 +10,19 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -38,7 +36,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/big_movie_poster_text" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/poster_normal_img"
@@ -68,7 +67,8 @@
                     android:padding="8dp"
                     android:src="@drawable/baseline_arrow_back_24"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/arrow_back_text" />
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -78,7 +78,8 @@
                     android:padding="8dp"
                     android:src="@drawable/baseline_favorite_24"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:contentDescription="@string/favorite_text" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -97,7 +98,7 @@
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="24dp"
                     android:maxLines="2"
-                    android:text="Title"
+                    android:text="@string/movie_title_text"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20sp"
@@ -123,7 +124,7 @@
                         android:layout_weight="1"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:text="0"
+                        android:text="@string/movie_rating_text"
                         android:textColor="@color/white"
                         app:drawableStartCompat="@drawable/baseline_star_24" />
 
@@ -134,7 +135,7 @@
                         android:layout_weight="1"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:text="0"
+                        android:text="@string/movie_duration_text"
                         android:textColor="@color/white"
                         app:drawableStartCompat="@drawable/baseline_access_time_24" />
 
@@ -144,7 +145,7 @@
                         android:layout_height="wrap_content"
                         android:drawablePadding="5dp"
                         android:gravity="center_vertical"
-                        android:text="0"
+                        android:text="@string/movie_release_text"
                         android:textColor="@color/white"
                         app:drawableStartCompat="@drawable/baseline_calendar_today_24" />
                 </LinearLayout>
@@ -157,20 +158,20 @@
                 android:layout_margin="16dp"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
-                android:text="Summary"
+                android:text="@string/summary_text"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                app:drawableStartCompat="@drawable/baseline_info_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/constraintLayout"
-                app:drawableStartCompat="@drawable/baseline_info_24" />
+                app:layout_constraintTop_toBottomOf="@id/constraintLayout" />
 
             <TextView
                 android:id="@+id/movie_summary_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="test"
+                android:text="@string/movie_summary_text"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@id/textView8"
@@ -184,24 +185,23 @@
                 android:layout_marginTop="16dp"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
-                android:text="Actors"
+                android:text="@string/actors_text"
                 android:textColor="@color/white"
                 android:textSize="16sp"
+                app:drawableStartCompat="@drawable/baseline_person_24"
                 app:layout_constraintEnd_toEndOf="@id/movie_summary_info"
                 app:layout_constraintStart_toStartOf="@id/movie_summary_info"
-                app:layout_constraintTop_toBottomOf="@id/movie_summary_info"
-                app:drawableStartCompat="@drawable/baseline_person_24" />
+                app:layout_constraintTop_toBottomOf="@id/movie_summary_info" />
 
             <TextView
                 android:id="@+id/movie_actor_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="test"
+                android:text="@string/movie_actor_info_text"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="@id/textView10"
-                app:layout_constraintEnd_toStartOf="@id/textView10"
+                app:layout_constraintStart_toStartOf="@id/textView10"
                 app:layout_constraintTop_toBottomOf="@id/textView10" />
 
             <androidx.recyclerview.widget.RecyclerView
