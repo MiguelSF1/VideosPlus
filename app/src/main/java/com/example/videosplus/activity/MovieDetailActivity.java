@@ -11,11 +11,20 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.videosplus.R;
+import com.example.videosplus.adapter.ImageListAdapter;
+import com.example.videosplus.domain.MovieItem;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
 
 public class MovieDetailActivity extends AppCompatActivity {
     private RequestQueue mRequestQueue;
@@ -34,6 +43,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
+        movieId = getIntent().getIntExtra("id", 0);
         initView();
     }
 
@@ -57,6 +67,37 @@ public class MovieDetailActivity extends AppCompatActivity {
         mRequestQueue = Volley.newRequestQueue(this);
         movieDetailLoading.setVisibility(View.VISIBLE);
         scrollView.setVisibility(View.GONE);
-        //TODO
+
+        mStringRequest = new StringRequest(Request.Method.GET, "http://localhost:8080/api/movies" + movieId, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Gson gson = new Gson();
+                movieDetailLoading.setVisibility(View.GONE);
+                scrollView.setVisibility(View.VISIBLE);
+
+                MovieItem movie = gson.fromJson(response, MovieItem.class);
+
+                Glide.with(MovieDetailActivity.this).load("poster").into(pic1);
+                Glide.with(MovieDetailActivity.this).load("poster").into(pic2);
+                titleText.setText(movie.getTitle());
+                movieRatingText.setText("rating");
+                movieDurationText.setText("duration");
+                movieDateText.setText("release date");
+                movieSummaryInfo.setText((CharSequence) movie.getDescription());
+                movieActorsInfo.setText("actors");
+
+                if ("movie.getImages()" != null) {
+                    adapterImgList = new ImageListAdapter(new ArrayList<>()); // "movie.getImages()"
+                    recyclerView.setAdapter(adapterImgList);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                movieDetailLoading.setVisibility(View.GONE);
+
+            }
+        });
+        mRequestQueue.add(mStringRequest);
     }
 }

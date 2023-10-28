@@ -15,6 +15,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.videosplus.R;
+import com.example.videosplus.adapter.MovieListAdapter;
+import com.example.videosplus.domain.MovieItem;
+import com.example.videosplus.domain.MovieList;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapterBestRatedMovies, adapterBestRatedShows;
@@ -44,8 +48,11 @@ public class MainActivity extends AppCompatActivity {
     private void sendRequestMovies() {
         mRequestQueue = Volley.newRequestQueue(this);
         loadingBestRatedMovies.setVisibility(View.VISIBLE);
-        mStringRequest = new StringRequest(Request.Method.GET, "", response -> {
-            //TODO
+        mStringRequest = new StringRequest(Request.Method.GET, "http://localhost:8080/api/movies", response -> {
+            Gson gson = new Gson();
+            MovieList movies = gson.fromJson(response, MovieList.class);
+            adapterBestRatedMovies = new MovieListAdapter(movies);
+            recyclerViewBestRatedMovies.setAdapter(adapterBestRatedMovies);
         }, error -> {
             //TODO
         });
