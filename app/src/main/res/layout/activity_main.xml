@@ -46,16 +46,16 @@
                 android:textColorHint="@color/white" />
 
             <TextView
-                android:id="@+id/best_movies_text"
+                android:id="@+id/movies_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/best_rated_movies"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginTop="24dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
                 android:layout_marginEnd="14dp"
-                android:textSize="18sp"/>
+                android:text="Movies"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -71,8 +71,10 @@
                     android:paddingEnd="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <ProgressBar
                     android:id="@+id/best_movies_view_loading"
@@ -85,46 +87,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="visible" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/best_shows_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/best_rated_shows"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_marginTop="24dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="14dp"
-                android:textSize="18sp" />
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/best_shows_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:minHeight="200dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ProgressBar
-                    android:id="@+id/best_shows_view_loading"
-                    style="@android:style/Widget.ProgressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
@@ -147,7 +109,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:contentDescription="@string/movies_button_description"
-                    app:srcCompat="@drawable/baseline_movie_24" />
+                    app:srcCompat="@drawable/baseline_search_24" />
 
                 <ImageView
                     android:id="@+id/shows_button"
@@ -155,7 +117,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:contentDescription="@string/shows_button_description"
-                    app:srcCompat="@drawable/baseline_video_label_24" />
+                    app:srcCompat="@drawable/baseline_star_24" />
 
                 <ImageView
                     android:id="@+id/downloads_button"

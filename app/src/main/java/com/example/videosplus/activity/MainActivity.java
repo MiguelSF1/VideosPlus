@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -21,11 +22,11 @@ import com.example.videosplus.domain.MovieList;
 import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView.Adapter adapterBestRatedMovies, adapterBestRatedShows;
-    private RecyclerView recyclerViewBestRatedMovies, recyclerViewBestRatedShows;
-    private ProgressBar loadingBestRatedMovies, loadingBestRatedShows;
+    private RecyclerView.Adapter adapterMovies;
+    private RecyclerView recyclerViewMovies;
+    private ProgressBar loadingMovies;
     private RequestQueue mRequestQueue;
-    private StringRequest mStringRequest, mStringRequest2;
+    private StringRequest mStringRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,42 +34,27 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
         sendRequestMovies();
-        sendRequestShows();
     }
 
     private void initView() {
-        recyclerViewBestRatedMovies = findViewById(R.id.best_movies_view);
-        recyclerViewBestRatedMovies.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewBestRatedShows = findViewById(R.id.best_shows_view);
-        recyclerViewBestRatedShows.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        loadingBestRatedMovies = findViewById(R.id.best_movies_view_loading);
-        loadingBestRatedShows = findViewById(R.id.best_shows_view_loading);
+        recyclerViewMovies = findViewById(R.id.best_movies_view);
+        recyclerViewMovies.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        loadingMovies = findViewById(R.id.best_movies_view_loading);
     }
 
     private void sendRequestMovies() {
         mRequestQueue = Volley.newRequestQueue(this);
-        loadingBestRatedMovies.setVisibility(View.VISIBLE);
-        mStringRequest = new StringRequest(Request.Method.GET, "http://localhost:8080/api/movies", response -> {
+        loadingMovies.setVisibility(View.VISIBLE);
+        mStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movies", response -> {
             Gson gson = new Gson();
             MovieList movies = gson.fromJson(response, MovieList.class);
-            adapterBestRatedMovies = new MovieListAdapter(movies);
-            recyclerViewBestRatedMovies.setAdapter(adapterBestRatedMovies);
+            adapterMovies = new MovieListAdapter(movies);
+            recyclerViewMovies.setAdapter(adapterMovies);
         }, error -> {
-            //TODO
+            Log.d("tag", "sendRequestMovies: ");
         });
-        loadingBestRatedMovies.setVisibility(View.GONE);
+        loadingMovies.setVisibility(View.GONE);
         mRequestQueue.add(mStringRequest);
     }
 
-    private void sendRequestShows() {
-        mRequestQueue = Volley.newRequestQueue(this);
-        loadingBestRatedShows.setVisibility(View.VISIBLE);
-        mStringRequest = new StringRequest(Request.Method.GET, "", response -> {
-            //TODO
-        }, error -> {
-            //TODO
-        });
-        loadingBestRatedShows.setVisibility(View.GONE);
-        mRequestQueue.add(mStringRequest);
-    }
 }

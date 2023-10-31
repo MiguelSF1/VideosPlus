@@ -56,7 +56,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieDateText = findViewById(R.id.movie_release);
         movieDurationText = findViewById(R.id.movie_duration);
         movieSummaryInfo = findViewById(R.id.movie_summary_info);
-        movieActorsInfo = findViewById(R.id.movie_actor_info);
+        movieActorsInfo = findViewById(R.id.movie_genre_info);
         backImg = findViewById(R.id.imageView4);
         recyclerView = findViewById(R.id.images_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

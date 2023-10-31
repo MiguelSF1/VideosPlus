@@ -185,7 +185,7 @@
                 android:layout_marginTop="16dp"
                 android:drawablePadding="5dp"
                 android:gravity="center_vertical"
-                android:text="@string/actors_text"
+                android:text="Genre"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:drawableStartCompat="@drawable/baseline_person_24"
@@ -194,7 +194,7 @@
                 app:layout_constraintTop_toBottomOf="@id/movie_summary_info" />
 
             <TextView
-                android:id="@+id/movie_actor_info"
+                android:id="@+id/movie_genre_info"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/movie_actor_info_text"
@@ -212,7 +212,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/movie_actor_info" />
+                app:layout_constraintTop_toBottomOf="@id/movie_genre_info" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
