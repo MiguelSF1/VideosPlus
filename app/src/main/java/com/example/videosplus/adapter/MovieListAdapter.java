@@ -18,10 +18,10 @@ import com.example.videosplus.domain.MovieItem;
 import com.example.videosplus.domain.MovieList;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
-    MovieList movies;
+    MovieItem[] movies;
     Context context;
 
-    public MovieListAdapter(MovieList movies) {
+    public MovieListAdapter(MovieItem[] movies) {
         this.movies = movies;
     }
 
@@ -36,16 +36,16 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull MovieListAdapter.ViewHolder holder, int position) {
-        holder.titleText.setText(movies.getTitle());
-        holder.scoreText.setText("3");
+        holder.titleText.setText(movies[position].getTitle());
+        //holder.scoreText.setText(movies[position].getRating().toString());
 
-        Glide.with(holder.itemView.getContext()).load("poster").into(holder.pic);
+        Glide.with(holder.itemView.getContext()).load(movies[position].getPoster()).into(holder.pic);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), MovieDetailActivity.class);
-                intent.putExtra("id", movies.getId());
+                intent.putExtra("id", movies[position].getId());
                 holder.itemView.getContext().startActivity(intent);
             }
         });
@@ -54,7 +54,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public int getItemCount() {
-        return 4;
+        return movies.length;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

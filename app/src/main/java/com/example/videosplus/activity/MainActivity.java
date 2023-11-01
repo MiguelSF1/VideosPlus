@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         loadingMovies.setVisibility(View.VISIBLE);
         mStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movies", response -> {
             Gson gson = new Gson();
-            MovieList movies = gson.fromJson(response, MovieList.class);
+            MovieItem[] movies = gson.fromJson(response, MovieItem[].class);
             adapterMovies = new MovieListAdapter(movies);
             recyclerViewMovies.setAdapter(adapterMovies);
         }, error -> {

@@ -1,4 +1,3 @@
-
 package com.example.videosplus.domain;
 
 import com.google.gson.annotations.Expose;
@@ -12,9 +11,24 @@ public class MovieList {
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("description")
+    @SerializedName("releaseDate")
     @Expose
-    private Object description;
+    private String releaseDate;
+    @SerializedName("duration")
+    @Expose
+    private Integer duration;
+    @SerializedName("poster")
+    @Expose
+    private String poster;
+    @SerializedName("rating")
+    @Expose
+    private Double rating;
+    @SerializedName("genre")
+    @Expose
+    private String genre;
+    @SerializedName("summary")
+    @Expose
+    private String summary;
 
     public Integer getId() {
         return id;
@@ -32,12 +46,52 @@ public class MovieList {
         this.title = title;
     }
 
-    public Object getDescription() {
-        return description;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setDescription(Object description) {
-        this.description = description;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
 }
