@@ -76,8 +76,8 @@ public class MovieDetailActivity extends AppCompatActivity {
 
                 MovieItem movie = gson.fromJson(response, MovieItem.class);
 
-                Glide.with(MovieDetailActivity.this).load("poster").into(pic1);
-                Glide.with(MovieDetailActivity.this).load("poster").into(pic2);
+                Glide.with(MovieDetailActivity.this).load(movie.getPoster()).into(pic1);
+                Glide.with(MovieDetailActivity.this).load(movie.getPoster()).into(pic2);
                 Log.d("bug", "onResponse: " + movie.getTitle());
                 titleText.setText(movie.getTitle());
                 //movieRatingText.setText(movie.getRating().toString());
