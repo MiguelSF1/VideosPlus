@@ -43,7 +43,8 @@
                 android:inputType="text"
                 android:padding="12dp"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white" />
+                android:textColorHint="@color/white"
+                tools:ignore="VisualLintTextFieldSize" />
 
             <TextView
                 android:id="@+id/movies_text"
@@ -52,14 +53,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="14dp"
-                android:text="Movies"
+                android:text="@string/movies_text"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="448dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/best_movies_view"

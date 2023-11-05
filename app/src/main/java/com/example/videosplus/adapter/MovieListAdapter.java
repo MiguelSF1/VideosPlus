@@ -1,6 +1,6 @@
 package com.example.videosplus.adapter;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,42 +14,35 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.videosplus.R;
 import com.example.videosplus.activity.MovieDetailActivity;
-import com.example.videosplus.domain.MovieItem;
-import com.example.videosplus.domain.MovieList;
+import com.example.videosplus.domain.Movie;
+
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
-    MovieItem[] movies;
-    Context context;
+    Movie[] movies;
 
-    public MovieListAdapter(MovieItem[] movies) {
+    public MovieListAdapter(Movie[] movies) {
         this.movies = movies;
     }
-
 
     @NonNull
     @Override
     public MovieListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_movie, parent, false);
-        context = parent.getContext();
         return new ViewHolder(inflate);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MovieListAdapter.ViewHolder holder, int position) {
-        holder.titleText.setText(movies[position].getTitle());
-        //holder.scoreText.setText(movies[position].getRating().toString());
+        holder.movieTitle.setText(movies[position].getTitle());
+        holder.movieRating.setText(movies[position].getRating().toString());
+        Glide.with(holder.itemView.getContext()).load(movies[position].getPoster()).into(holder.moviePoster);
 
-        Glide.with(holder.itemView.getContext()).load(movies[position].getPoster()).into(holder.pic);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), MovieDetailActivity.class);
-                intent.putExtra("id", movies[position].getId());
-                holder.itemView.getContext().startActivity(intent);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), MovieDetailActivity.class);
+            intent.putExtra("id", movies[position].getMovieId());
+            holder.itemView.getContext().startActivity(intent);
         });
-
     }
 
     @Override
@@ -57,16 +50,15 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         return movies.length;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titleText, scoreText;
-        ImageView pic;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView movieTitle, movieRating;
+        ImageView moviePoster;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleText = itemView.findViewById(R.id.title_text);
-            scoreText = itemView.findViewById(R.id.movie_rating);
-            pic = itemView.findViewById(R.id.pic);
+            movieTitle = itemView.findViewById(R.id.movies_title);
+            movieRating = itemView.findViewById(R.id.movies_rating);
+            moviePoster = itemView.findViewById(R.id.movies_poster);
         }
-
     }
 }

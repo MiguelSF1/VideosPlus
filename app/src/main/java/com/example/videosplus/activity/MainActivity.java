@@ -1,7 +1,7 @@
 package com.example.videosplus.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
@@ -11,22 +11,18 @@ import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.videosplus.R;
 import com.example.videosplus.adapter.MovieListAdapter;
-import com.example.videosplus.domain.MovieItem;
-import com.example.videosplus.domain.MovieList;
+import com.example.videosplus.domain.Movie;
 import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView.Adapter adapterMovies;
+    private MovieListAdapter movieListAdapter;
     private RecyclerView recyclerViewMovies;
-    private ProgressBar loadingMovies;
-    private RequestQueue mRequestQueue;
-    private StringRequest mStringRequest;
+    private ProgressBar progressBarMovies;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,23 +34,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void initView() {
         recyclerViewMovies = findViewById(R.id.best_movies_view);
-        recyclerViewMovies.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        loadingMovies = findViewById(R.id.best_movies_view_loading);
+        recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 3));
+        progressBarMovies = findViewById(R.id.best_movies_view_loading);
     }
 
     private void sendRequestMovies() {
-        mRequestQueue = Volley.newRequestQueue(this);
-        loadingMovies.setVisibility(View.VISIBLE);
-        mStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movies", response -> {
-            Gson gson = new Gson();
-            MovieItem[] movies = gson.fromJson(response, MovieItem[].class);
-            adapterMovies = new MovieListAdapter(movies);
-            recyclerViewMovies.setAdapter(adapterMovies);
-        }, error -> {
-            Log.d("tag", "sendRequestMovies: ");
-        });
-        loadingMovies.setVisibility(View.GONE);
-        mRequestQueue.add(mStringRequest);
+        RequestQueue moviesRequestQueue = Volley.newRequestQueue(this);
+        progressBarMovies.setVisibility(View.VISIBLE);
+        StringRequest moviesStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movies", response -> {
+            Movie[] movies = new Gson().fromJson(response, Movie[].class);
+            movieListAdapter = new MovieListAdapter(movies);
+            recyclerViewMovies.setAdapter(movieListAdapter);
+        }, error -> Log.d("failure", "sendRequestMovies: Failed "));
+        progressBarMovies.setVisibility(View.GONE);
+        moviesRequestQueue.add(moviesStringRequest);
     }
-
 }

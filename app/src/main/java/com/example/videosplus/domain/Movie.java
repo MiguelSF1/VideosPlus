@@ -3,15 +3,14 @@ package com.example.videosplus.domain;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class MovieList {
-
-    @SerializedName("id")
+public class Movie {
+    @SerializedName("movie_id")
     @Expose
-    private Integer id;
+    private Integer movieId;
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("releaseDate")
+    @SerializedName("release_date")
     @Expose
     private String releaseDate;
     @SerializedName("duration")
@@ -22,7 +21,7 @@ public class MovieList {
     private String poster;
     @SerializedName("rating")
     @Expose
-    private Double rating;
+    private Float rating;
     @SerializedName("genre")
     @Expose
     private String genre;
@@ -30,12 +29,12 @@ public class MovieList {
     @Expose
     private String summary;
 
-    public Integer getId() {
-        return id;
+    public Integer getMovieId() {
+        return movieId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 
     public String getTitle() {
@@ -70,11 +69,11 @@ public class MovieList {
         this.poster = poster;
     }
 
-    public Double getRating() {
+    public Float getRating() {
         return rating;
     }
 
-    public void setRating(Double rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 

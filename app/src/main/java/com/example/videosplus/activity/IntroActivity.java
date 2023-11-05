@@ -16,12 +16,9 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
 
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(IntroActivity.this, LoginActivity.class));
-                finish();
-            }
+        handler.postDelayed(() -> {
+            startActivity(new Intent(IntroActivity.this, LoginActivity.class));
+            finish();
         }, 4000);
     }
 }

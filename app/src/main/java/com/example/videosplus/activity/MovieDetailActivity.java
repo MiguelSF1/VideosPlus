@@ -2,11 +2,9 @@ package com.example.videosplus.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,26 +12,21 @@ import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.videosplus.R;
-import com.example.videosplus.domain.MovieItem;
+import com.example.videosplus.domain.Movie;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.gson.Gson;
 
 public class MovieDetailActivity extends AppCompatActivity {
-    private RequestQueue mRequestQueue;
-    private StringRequest mStringRequest;
-    private ProgressBar movieDetailLoading;
-    private TextView titleText, movieRatingText, movieDateText, movieDurationText, movieSummaryInfo, movieGenreInfo;
-    private NestedScrollView scrollView;
     private int movieId;
-    private ShapeableImageView pic1;
-    private ImageView pic2, backImg;
-    private RecyclerView recyclerView;
+    private TextView movieTitle, movieRating, movieReleaseDate, movieDuration, movieSummary, movieGenre;
+    private ProgressBar movieProgressBar;
+    private NestedScrollView nestedScrollView;
+    private ShapeableImageView posterNormalSize;
+    private ImageView posterBigSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,53 +39,44 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        titleText = findViewById(R.id.movie_title);
-        movieDetailLoading = findViewById(R.id.detail_loading);
-        pic1 = findViewById(R.id.poster_normal_img);
-        pic2 = findViewById(R.id.poster_big_img);
-        movieRatingText = findViewById(R.id.movie_rating);
-        movieDateText = findViewById(R.id.movie_release);
-        movieDurationText = findViewById(R.id.movie_duration);
-        movieSummaryInfo = findViewById(R.id.movie_summary_info);
-        movieGenreInfo = findViewById(R.id.movie_genre_info);
-        backImg = findViewById(R.id.imageView4);
-        scrollView = findViewById(R.id.nested_detail_view);
-        recyclerView = findViewById(R.id.images_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        backImg.setOnClickListener(v -> finish());
+        movieTitle = findViewById(R.id.movie_title);
+        movieProgressBar = findViewById(R.id.detail_loading);
+        posterNormalSize = findViewById(R.id.poster_normal_img);
+        posterBigSize = findViewById(R.id.poster_big_img);
+        movieRating = findViewById(R.id.movie_rating);
+        movieReleaseDate = findViewById(R.id.movie_release);
+        movieDuration = findViewById(R.id.movie_duration);
+        movieSummary = findViewById(R.id.movie_summary_info);
+        movieGenre = findViewById(R.id.movie_genre_info);
+        ImageView backArrow = findViewById(R.id.imageView4);
+        nestedScrollView = findViewById(R.id.nested_detail_view);
+
+        backArrow.setOnClickListener(v -> finish());
     }
 
     private void sendRequest() {
-        mRequestQueue = Volley.newRequestQueue(this);
-        movieDetailLoading.setVisibility(View.VISIBLE);
-        scrollView.setVisibility(View.GONE);
+        RequestQueue movieRequestQueue = Volley.newRequestQueue(this);
+        movieProgressBar.setVisibility(View.VISIBLE);
+        nestedScrollView.setVisibility(View.GONE);
 
-        mStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movies/" + movieId, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Gson gson = new Gson();
-                movieDetailLoading.setVisibility(View.GONE);
-                scrollView.setVisibility(View.VISIBLE);
+        @SuppressLint("SetTextI18n")
+        StringRequest movieStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movies/" + movieId, response -> {
+            movieProgressBar.setVisibility(View.GONE);
+            nestedScrollView.setVisibility(View.VISIBLE);
 
-                MovieItem movie = gson.fromJson(response, MovieItem.class);
+            Movie movie = new Gson().fromJson(response, Movie.class);
 
-                Glide.with(MovieDetailActivity.this).load(movie.getPoster()).into(pic1);
-                Glide.with(MovieDetailActivity.this).load(movie.getPoster()).into(pic2);
-                Log.d("bug", "onResponse: " + movie.getTitle());
-                titleText.setText(movie.getTitle());
-                //movieRatingText.setText(movie.getRating().toString());
-                movieDurationText.setText(movie.getDuration().toString());
-                movieDateText.setText(movie.getReleaseDate());
-                movieSummaryInfo.setText(movie.getSummary());
-                movieGenreInfo.setText(movie.getGenre());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                movieDetailLoading.setVisibility(View.GONE);
+            Glide.with(MovieDetailActivity.this).load(movie.getPoster()).into(posterNormalSize);
+            Glide.with(MovieDetailActivity.this).load(movie.getPoster()).into(posterBigSize);
 
-            }
-        });
-        mRequestQueue.add(mStringRequest);
+            movieTitle.setText(movie.getTitle());
+            movieRating.setText(movie.getRating().toString());
+            movieDuration.setText(movie.getDuration().toString());
+            movieReleaseDate.setText(movie.getReleaseDate());
+            movieSummary.setText(movie.getSummary());
+            movieGenre.setText(movie.getGenre());
+        }, error -> movieProgressBar.setVisibility(View.GONE));
+
+        movieRequestQueue.add(movieStringRequest);
     }
 }

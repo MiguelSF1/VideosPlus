@@ -27,4 +27,6 @@
     <string name="movie_stars_text">movie stars</string>
     <string name="score_text">Score</string>
     <string name="title_text">Title</string>
+    <string name="movies_text">Movies</string>
+    <string name="genre_text">Genre</string>
 </resources>
