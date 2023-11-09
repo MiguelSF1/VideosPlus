@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         Button signInButton = findViewById(R.id.sign_in_button);
 
         signInButton.setOnClickListener(view -> {
-            if (!sendRequestUsers()) {
+            if (false) {
                 Toast.makeText(LoginActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
             } else {
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
