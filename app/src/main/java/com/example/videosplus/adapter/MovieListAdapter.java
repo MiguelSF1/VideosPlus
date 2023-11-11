@@ -14,13 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.videosplus.R;
 import com.example.videosplus.activity.MovieDetailActivity;
-import com.example.videosplus.domain.Movie;
+import com.example.videosplus.object.Movie;
+
+import java.util.List;
 
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
-    Movie[] movies;
+    List<Movie> movies;
 
-    public MovieListAdapter(Movie[] movies) {
+    public MovieListAdapter(List<Movie> movies) {
         this.movies = movies;
     }
 
@@ -34,20 +36,20 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MovieListAdapter.ViewHolder holder, int position) {
-        holder.movieTitle.setText(movies[position].getTitle());
-        holder.movieRating.setText(movies[position].getRating().toString());
-        Glide.with(holder.itemView.getContext()).load(movies[position].getPoster()).into(holder.moviePoster);
+        holder.movieTitle.setText(movies.get(position).getTitle());
+        holder.movieRating.setText(movies.get(position).getRating().toString());
+        Glide.with(holder.itemView.getContext()).load(movies.get(position).getPoster()).into(holder.moviePoster);
 
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(holder.itemView.getContext(), MovieDetailActivity.class);
-            intent.putExtra("id", movies[position].getMovieId());
+            intent.putExtra("id", movies.get(position).getMovieId());
             holder.itemView.getContext().startActivity(intent);
         });
     }
 
     @Override
     public int getItemCount() {
-        return movies.length;
+        return movies.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

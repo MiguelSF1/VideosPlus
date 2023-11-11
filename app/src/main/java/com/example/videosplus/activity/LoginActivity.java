@@ -14,7 +14,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.videosplus.R;
-import com.example.videosplus.domain.User;
+import com.example.videosplus.object.User;
 import com.google.gson.Gson;
 
 import java.util.Objects;
