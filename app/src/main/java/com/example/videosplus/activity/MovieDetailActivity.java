@@ -17,10 +17,17 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.videosplus.R;
+import com.example.videosplus.VideoVersionDialogFragment;
 import com.example.videosplus.object.Movie;
+import com.example.videosplus.object.MovieVersion;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovieDetailActivity extends AppCompatActivity {
     private int movieId;
@@ -29,6 +36,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     private NestedScrollView nestedScrollView;
     private ShapeableImageView posterNormalSize;
     private ImageView posterBigSize;
+    private List<MovieVersion> movieVersions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +45,8 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         movieId = getIntent().getIntExtra("id", 1);
         initView();
-        sendRequest();
+        sendRequestMovie();
+        sendRequestMovieVersion();
     }
 
     private void initView() {
@@ -55,15 +64,12 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         backArrow.setOnClickListener(v -> finish());
 
-        // fragment for selecting movie version here
         playArrow.setOnClickListener(v -> {
-            Intent intent = new Intent(this, PlayerActivity.class);
-            intent.putExtra("videoUrl", "http://techslides.com/demos/sample-videos/small.mp4");
-            startActivity(intent);
+            openDialog();
         });
     }
 
-    private void sendRequest() {
+    private void sendRequestMovie() {
         RequestQueue movieRequestQueue = Volley.newRequestQueue(this);
         movieProgressBar.setVisibility(View.VISIBLE);
         nestedScrollView.setVisibility(View.GONE);
@@ -88,5 +94,19 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieRequestQueue.add(movieStringRequest);
     }
 
-    // make request for video link
+    private void sendRequestMovieVersion() {
+        RequestQueue movieRequestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movieVersions/" + movieId, response -> {
+            Type listType = new TypeToken<ArrayList<MovieVersion>>(){}.getType();
+            movieVersions = new Gson().fromJson(response, listType);
+
+        }, error -> {});
+        movieRequestQueue.add(stringRequest);
+    }
+
+    public void openDialog() {
+        VideoVersionDialogFragment videoVersionDialogFragment = new VideoVersionDialogFragment(movieVersions);
+        videoVersionDialogFragment.show(getSupportFragmentManager(), "Movie Version");
+    }
 }

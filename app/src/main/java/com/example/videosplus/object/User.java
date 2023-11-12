@@ -13,9 +13,6 @@ public class User {
     @SerializedName("password")
     @Expose
     private String password;
-    @SerializedName("permission_level")
-    @Expose
-    private Integer permissionLevel;
 
     public Integer getUserId() {
         return userId;
@@ -29,10 +26,6 @@ public class User {
         return password;
     }
 
-    public Integer getPermissionLevel() {
-        return permissionLevel;
-    }
-
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
@@ -43,9 +36,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setPermissionLevel(Integer permissionLevel) {
-        this.permissionLevel = permissionLevel;
     }
 }

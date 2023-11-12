@@ -61,11 +61,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         }
 
-        if (filteredList.isEmpty()) {
-            Toast.makeText(this,"No videos found", Toast.LENGTH_SHORT).show();
-        } else {
-            movieListAdapter = new MovieListAdapter(filteredList);
-            recyclerView.setAdapter(movieListAdapter);
-        }
+        movieListAdapter = new MovieListAdapter(filteredList);
+        recyclerView.setAdapter(movieListAdapter);
     }
 }

@@ -24,9 +24,6 @@ public class Movie implements Serializable {
     @SerializedName("rating")
     @Expose
     private Float rating;
-    @SerializedName("genre")
-    @Expose
-    private String genre;
     @SerializedName("summary")
     @Expose
     private String summary;
@@ -77,14 +74,6 @@ public class Movie implements Serializable {
 
     public void setRating(Float rating) {
         this.rating = rating;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
     }
 
     public String getSummary() {
