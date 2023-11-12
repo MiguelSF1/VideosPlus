@@ -1,33 +1,30 @@
-package com.example.videosplus;
+package com.example.videosplus.fragment;
 
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.videosplus.activity.MainActivity;
-import com.example.videosplus.activity.MovieDetailActivity;
+import com.example.videosplus.R;
 import com.example.videosplus.activity.PlayerActivity;
-import com.example.videosplus.object.Movie;
 import com.example.videosplus.object.MovieVersion;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class VideoVersionDialogFragment extends DialogFragment {
     private Spinner movieFormat;
     private Spinner movieResolution;
-    private List<MovieVersion> movieVersions;
+    private final List<MovieVersion> movieVersions;
     private List<String> movieFormats;
     private List<String> movieResolutions;
 
@@ -35,6 +32,7 @@ public class VideoVersionDialogFragment extends DialogFragment {
         this.movieVersions = movieVersions;
     }
 
+    @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -54,28 +52,22 @@ public class VideoVersionDialogFragment extends DialogFragment {
         adapter2.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         movieResolution.setAdapter(adapter2);
 
+        builder.setView(view).setTitle("Movie Version").setNegativeButton("Cancel", (dialog, which) -> {
+        }).setPositiveButton("Play", (dialog, which) -> {
+            String selectedFormat = (String) movieFormat.getSelectedItem();
+            String selectedResolution = (String) movieResolution.getSelectedItem();
+            String videoUrl = "";
 
-
-        builder.setView(view).setTitle("Movie Version").setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        }).setPositiveButton("Play", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String selectedFormat = (String) movieFormat.getSelectedItem();
-                String selectedResolution = (String) movieResolution.getSelectedItem();
-                String videoUrl = "";
-                for (MovieVersion movieVersion : movieVersions) {
-                   if (movieVersion.getMovieFormat() == selectedFormat && movieVersion.getMovieResolution() == selectedResolution) {
-                        videoUrl = movieVersion.getMovieLink();
-                        break;
-                    }
+            for (MovieVersion movieVersion : movieVersions) {
+               if (Objects.equals(movieVersion.getMovieFormat(), selectedFormat) && Objects.equals(movieVersion.getMovieResolution(), selectedResolution)) {
+                    videoUrl = movieVersion.getMovieLink();
+                    break;
                 }
-                Intent intent = new Intent(getContext(), PlayerActivity.class);
-                intent.putExtra("videoUrl", videoUrl);
-                startActivity(intent);
             }
+
+            Intent intent = new Intent(getContext(), PlayerActivity.class);
+            intent.putExtra("videoUrl", videoUrl);
+            startActivity(intent);
         });
 
         return builder.create();

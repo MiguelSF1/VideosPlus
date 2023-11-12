@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,7 +24,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+
         sendRequestMovies();
     }
 
@@ -68,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
             movieListAdapter = new MovieListAdapter(movies);
             recyclerViewMovies.setAdapter(movieListAdapter);
         }, error -> Log.d("failure", "sendRequestMovies: Failed "));
+
         progressBarMovies.setVisibility(View.GONE);
         moviesRequestQueue.add(moviesStringRequest);
     }
-
 }
