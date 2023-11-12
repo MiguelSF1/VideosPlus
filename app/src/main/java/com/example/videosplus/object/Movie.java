@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Movie implements Serializable {
-    @SerializedName("movie_id")
+    @SerializedName("id")
     @Expose
     private Integer movieId;
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("release_date")
+    @SerializedName("releaseDate")
     @Expose
     private String releaseDate;
     @SerializedName("duration")

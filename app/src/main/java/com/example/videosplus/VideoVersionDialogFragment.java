@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -44,6 +45,7 @@ public class VideoVersionDialogFragment extends DialogFragment {
 
         buildLists();
 
+
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, movieFormats);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
         movieFormat.setAdapter(adapter);
@@ -61,17 +63,15 @@ public class VideoVersionDialogFragment extends DialogFragment {
         }).setPositiveButton("Play", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                // get movieUrl and start player
                 String selectedFormat = (String) movieFormat.getSelectedItem();
                 String selectedResolution = (String) movieResolution.getSelectedItem();
                 String videoUrl = "";
                 for (MovieVersion movieVersion : movieVersions) {
-                    if (movieVersion.getMovieFormat() == selectedFormat && movieVersion.getMovieResolution() == selectedResolution) {
+                   if (movieVersion.getMovieFormat() == selectedFormat && movieVersion.getMovieResolution() == selectedResolution) {
                         videoUrl = movieVersion.getMovieLink();
                         break;
                     }
                 }
-                // "http://techslides.com/demos/sample-videos/small.mp4" create movie version in db with this link
                 Intent intent = new Intent(getContext(), PlayerActivity.class);
                 intent.putExtra("videoUrl", videoUrl);
                 startActivity(intent);

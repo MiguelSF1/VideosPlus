@@ -3,24 +3,26 @@ package com.example.videosplus.object;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 public class MovieVersion {
-    @SerializedName("version_id")
+    @SerializedName("id")
     @Expose
     private Integer versionId;
 
-    @SerializedName("movie_id")
+    @SerializedName("movieId")
     @Expose
     private Integer movieId;
 
-    @SerializedName("movie_format")
+    @SerializedName("movieFormat")
     @Expose
     private String movieFormat;
 
-    @SerializedName("movie_resolution")
+    @SerializedName("movieResolution")
     @Expose
     private String movieResolution;
 
-    @SerializedName("movie_link")
+    @SerializedName("movieLink")
     @Expose
     private String movieLink;
 
