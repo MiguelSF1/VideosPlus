@@ -11,8 +11,8 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.videosplus.R;
+import com.example.videosplus.object.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordEditText.getText().toString();
 
             try {
-                RequestQueue usersRequestQueue = Volley.newRequestQueue(this);
+                RequestQueue usersRequestQueue = VolleySingleton.getInstance(this).getRequestQueue();
                 JSONObject jsonBody = new JSONObject();
                 jsonBody.put("username", username);
                 jsonBody.put("password", password);

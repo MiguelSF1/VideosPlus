@@ -13,12 +13,12 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.videosplus.R;
 import com.example.videosplus.fragment.VideoVersionDialogFragment;
 import com.example.videosplus.object.Movie;
 import com.example.videosplus.object.MovieVersion;
+import com.example.videosplus.object.VolleySingleton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.gson.Gson;
@@ -70,7 +70,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void sendRequestMovie() {
-        RequestQueue movieRequestQueue = Volley.newRequestQueue(this);
+        RequestQueue movieRequestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         movieProgressBar.setVisibility(View.VISIBLE);
         nestedScrollView.setVisibility(View.GONE);
 
@@ -89,7 +89,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void sendRequestMovieVersion() {
-        RequestQueue movieRequestQueue = Volley.newRequestQueue(this);
+        RequestQueue movieRequestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movieVersions/" + movieId, response -> {
             Type listType = new TypeToken<ArrayList<MovieVersion>>(){}.getType();
             movieVersions = new Gson().fromJson(response, listType);
