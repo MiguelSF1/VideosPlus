@@ -62,13 +62,16 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue moviesRequestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         progressBarMovies.setVisibility(View.VISIBLE);
         StringRequest moviesStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movies", response -> {
+            progressBarMovies.setVisibility(View.GONE);
             Type listType = new TypeToken<ArrayList<Movie>>(){}.getType();
             movies = new Gson().fromJson(response, listType);
             movieListAdapter = new MovieListAdapter(movies);
             recyclerViewMovies.setAdapter(movieListAdapter);
-        }, error -> Log.d("failure", "sendRequestMovies: Failed "));
+        }, error -> {
+            progressBarMovies.setVisibility(View.GONE);
+            Log.d("failure", "sendRequestMovies: Failed ");
+        });
 
-        progressBarMovies.setVisibility(View.GONE);
         moviesRequestQueue.add(moviesStringRequest);
     }
 }

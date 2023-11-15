@@ -34,6 +34,7 @@
                     android:id="@+id/movie_summary_info"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:layout_margin="8dp"
                     android:text="@string/movie_summary_text"
                     android:textColor="@color/white"
                     android:textSize="14sp"

@@ -29,7 +29,6 @@
     <string name="title_text">Title</string>
     <string name="movies_text">Movies</string>
     <string name="genre_text">Genre</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_icon">Search icon</string>
     <string name="play_arrow">play arrow</string>
