@@ -19,31 +19,37 @@ import org.json.JSONObject;
 
 import java.nio.charset.StandardCharsets;
 
-public class LoginActivity extends AppCompatActivity {
-    private EditText usernameEditText, passwordEditText;
+public class RegisterActivity extends AppCompatActivity {
+    private EditText usernameEditText, passwordEditText, passwordConfirmEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
 
         initView();
     }
 
-    private void initView() {
-        usernameEditText = findViewById(R.id.username_input);
-        passwordEditText = findViewById(R.id.password_input);
-        Button signInButton = findViewById(R.id.sign_in_button);
-        Button registerButton = findViewById(R.id.register_button);
+    public void initView() {
+        usernameEditText = findViewById(R.id.username_input_register);
+        passwordEditText = findViewById(R.id.password_input_register);
+        passwordConfirmEditText = findViewById(R.id.password_input2_register);
+        Button signUpButton = findViewById(R.id.sign_up_button);
+        Button loginButton = findViewById(R.id.login_button);
 
-        registerButton.setOnClickListener(view -> {
-            Intent intent = new Intent(this, RegisterActivity.class);
+        loginButton.setOnClickListener(view -> {
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         });
 
-        signInButton.setOnClickListener(view -> {
+        signUpButton.setOnClickListener(view -> {
             String username = usernameEditText.getText().toString();
             String password = passwordEditText.getText().toString();
+            String passwordConfirm = passwordConfirmEditText.getText().toString();
+            if (!password.equals(passwordConfirm) || username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(RegisterActivity.this, "Passwords not equal or empty fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             try {
                 RequestQueue usersRequestQueue = VolleySingleton.getInstance(this).getRequestQueue();
@@ -52,9 +58,9 @@ public class LoginActivity extends AppCompatActivity {
                 jsonBody.put("password", password);
                 String responseBody = jsonBody.toString();
 
-                StringRequest usersStringRequest = new StringRequest(Request.Method.POST, "http://192.168.1.103:8080/api/users/login",
-                        response -> startActivity(new Intent(LoginActivity.this, MainActivity.class)),
-                        error -> Toast.makeText(LoginActivity.this, "Failed Login Attempt", Toast.LENGTH_SHORT).show()) {
+                StringRequest usersStringRequest = new StringRequest(Request.Method.PUT, "http://192.168.1.103:8080/api/users",
+                        response -> startActivity(new Intent(RegisterActivity.this, MainActivity.class)),
+                        error -> Toast.makeText(RegisterActivity.this, "Failed Register Attempt", Toast.LENGTH_SHORT).show()) {
                     @Override
                     public String getBodyContentType() {
                         return "application/json; charset=utf-8";
