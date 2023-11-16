@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
         initView();
     }
 
-    public void initView() {
+    private void initView() {
         usernameEditText = findViewById(R.id.username_input_register);
         passwordEditText = findViewById(R.id.password_input_register);
         passwordConfirmEditText = findViewById(R.id.password_input2_register);
