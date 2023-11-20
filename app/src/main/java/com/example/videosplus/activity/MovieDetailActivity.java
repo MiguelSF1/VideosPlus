@@ -75,7 +75,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         nestedScrollView.setVisibility(View.GONE);
 
 
-        StringRequest movieStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movies/" + movieId, response -> {
+        StringRequest movieStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/movies/" + movieId, response -> {
             movieProgressBar.setVisibility(View.GONE);
             nestedScrollView.setVisibility(View.VISIBLE);
 
@@ -90,7 +90,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private void sendRequestMovieVersion() {
         RequestQueue movieRequestQueue = VolleySingleton.getInstance(this).getRequestQueue();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movieVersions/" + movieId, response -> {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/movieVersions/" + movieId, response -> {
             Type listType = new TypeToken<ArrayList<MovieVersion>>(){}.getType();
             movieVersions = new Gson().fromJson(response, listType);
 
@@ -100,7 +100,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     public void openDialog() {
-        VideoVersionDialogFragment videoVersionDialogFragment = new VideoVersionDialogFragment(movieVersions);
+        VideoVersionDialogFragment videoVersionDialogFragment = new VideoVersionDialogFragment(movieVersions, this);
         videoVersionDialogFragment.show(getSupportFragmentManager(), "Movie Version");
     }
 

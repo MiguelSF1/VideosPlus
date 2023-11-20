@@ -41,7 +41,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.9.1")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation("androidx.media3:media3-exoplayer:1.1.1")
-    implementation("androidx.media3:media3-exoplayer-dash:1.1.1")
+    implementation("androidx.media3:media3-exoplayer-hls:1.1.1")
     implementation("androidx.media3:media3-ui:1.1.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

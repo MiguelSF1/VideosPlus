@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     private void sendRequestMovies() {
         RequestQueue moviesRequestQueue = VolleySingleton.getInstance(this).getRequestQueue();
         progressBarMovies.setVisibility(View.VISIBLE);
-        StringRequest moviesStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/api/movies", response -> {
+        StringRequest moviesStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/movies", response -> {
             progressBarMovies.setVisibility(View.GONE);
             Type listType = new TypeToken<ArrayList<Movie>>(){}.getType();
             movies = new Gson().fromJson(response, listType);

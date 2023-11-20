@@ -5,47 +5,24 @@
     android:layout_height="match_parent">
 
     <Spinner
-        android:id="@+id/movie_format"
+        android:id="@+id/movie_version"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/movie_resolution"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <Spinner
-        android:id="@+id/movie_resolution"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/movie_format" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
         android:height="48dp"
         android:gravity="center_vertical"
-        android:text="@string/format"
+        android:text="@string/movie_version_text"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
-        app:layout_constraintEnd_toStartOf="@+id/movie_format"
+        app:layout_constraintEnd_toStartOf="@+id/movie_version"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:height="48dp"
-        android:gravity="center_vertical"
-        android:text="@string/resolution"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toStartOf="@+id/movie_resolution"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

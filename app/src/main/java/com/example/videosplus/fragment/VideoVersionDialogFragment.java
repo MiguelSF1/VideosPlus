@@ -1,6 +1,5 @@
 package com.example.videosplus.fragment;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.videosplus.R;
+import com.example.videosplus.activity.MovieDetailActivity;
 import com.example.videosplus.activity.PlayerActivity;
 import com.example.videosplus.object.MovieVersion;
 
@@ -22,68 +22,55 @@ import java.util.List;
 import java.util.Objects;
 
 public class VideoVersionDialogFragment extends DialogFragment {
-    private Spinner movieFormat;
-    private Spinner movieResolution;
+    private Spinner movieVersion;
     private final List<MovieVersion> movieVersions;
-    private List<String> movieFormats;
-    private List<String> movieResolutions;
+    MovieDetailActivity activity;
 
-    public VideoVersionDialogFragment(List<MovieVersion> movieVersions) {
+    public VideoVersionDialogFragment(List<MovieVersion> movieVersions, MovieDetailActivity activity) {
         this.movieVersions = movieVersions;
+        this.activity = activity;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.video_version_dialog_layout, null);
-        movieFormat = view.findViewById(R.id.movie_format);
-        movieResolution = view.findViewById(R.id.movie_resolution);
+        movieVersion = view.findViewById(R.id.movie_version);
 
-        buildLists();
+        List<String> movieFormatsAndResolutions = new ArrayList<>();
 
+        for (MovieVersion movieVersion : movieVersions) {
+            movieFormatsAndResolutions.add(movieVersion.getMovieFormat() + " " + movieVersion.getMovieResolution());
+        }
 
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, movieFormats);
+        ArrayAdapter adapter = new ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, movieFormatsAndResolutions);
         adapter.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        movieFormat.setAdapter(adapter);
+        movieVersion.setAdapter(adapter);
 
-        ArrayAdapter adapter2 = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, movieResolutions);
-        adapter2.setDropDownViewResource(android.R.layout.select_dialog_singlechoice);
-        movieResolution.setAdapter(adapter2);
 
         builder.setView(view).setTitle("Movie Version").setNegativeButton("Cancel", (dialog, which) -> {
         }).setPositiveButton("Play", (dialog, which) -> {
-            String selectedFormat = (String) movieFormat.getSelectedItem();
-            String selectedResolution = (String) movieResolution.getSelectedItem();
-            String videoUrl = "";
+            String selectedOption = (String) movieVersion.getSelectedItem();
+            String[] selectedVersion = selectedOption.split(" ");
+            String selectedFormat = selectedVersion[0];
+            String selectedResolution = selectedVersion[1];
 
             for (MovieVersion movieVersion : movieVersions) {
                if (Objects.equals(movieVersion.getMovieFormat(), selectedFormat) && Objects.equals(movieVersion.getMovieResolution(), selectedResolution)) {
-                    videoUrl = movieVersion.getMovieLink();
+                   Intent intent = new Intent(activity, PlayerActivity.class);
+                   intent.putExtra("id", movieVersion.getVersionId());
+                   intent.putExtra("movieId", movieVersion.getMovieId());
+                   intent.putExtra("movieFormat", movieVersion.getMovieFormat());
+                   intent.putExtra("movieResolution", movieVersion.getMovieResolution());
+                   intent.putExtra("movieLink", movieVersion.getMovieLink());
+                   startActivity(intent);
                     break;
                 }
             }
-
-            Intent intent = new Intent(getContext(), PlayerActivity.class);
-            intent.putExtra("videoUrl", videoUrl);
-            startActivity(intent);
         });
 
         return builder.create();
-    }
-
-    private void buildLists() {
-        movieFormats = new ArrayList<>();
-        movieResolutions = new ArrayList<>();
-
-        for (MovieVersion movieVersion : movieVersions) {
-            if (!movieFormats.contains(movieVersion.getMovieFormat())) {
-                movieFormats.add(movieVersion.getMovieFormat());
-            }
-            if (!movieResolutions.contains(movieVersion.getMovieResolution())) {
-                movieResolutions.add(movieVersion.getMovieResolution());
-            }
-        }
     }
 }
