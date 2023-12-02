@@ -14,7 +14,7 @@ public class Movie implements Serializable {
     private String title;
     @SerializedName("releaseDate")
     @Expose
-    private String releaseDate;
+    private Integer releaseDate;
     @SerializedName("duration")
     @Expose
     private Integer duration;
@@ -44,11 +44,11 @@ public class Movie implements Serializable {
         this.title = title;
     }
 
-    public String getReleaseDate() {
+    public Integer getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
+    public void setReleaseDate(Integer releaseDate) {
         this.releaseDate = releaseDate;
     }
 

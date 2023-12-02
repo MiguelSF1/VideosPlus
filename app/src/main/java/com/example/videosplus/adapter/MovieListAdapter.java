@@ -43,6 +43,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(holder.itemView.getContext(), MovieDetailActivity.class);
             intent.putExtra("id", movies.get(position).getMovieId());
+            intent.putExtra("title", movies.get(position).getTitle());
+            intent.putExtra("releaseDate", movies.get(position).getReleaseDate());
+            intent.putExtra("duration", movies.get(position).getDuration());
+            intent.putExtra("poster", movies.get(position).getPoster());
+            intent.putExtra("rating", movies.get(position).getRating());
+            intent.putExtra("summary", movies.get(position).getSummary());
             holder.itemView.getContext().startActivity(intent);
         });
     }

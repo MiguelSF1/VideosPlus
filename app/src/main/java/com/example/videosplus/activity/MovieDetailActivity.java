@@ -1,13 +1,10 @@
 package com.example.videosplus.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -16,7 +13,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.example.videosplus.R;
 import com.example.videosplus.fragment.VideoVersionDialogFragment;
-import com.example.videosplus.object.Movie;
 import com.example.videosplus.object.MovieVersion;
 import com.example.videosplus.object.VolleySingleton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,13 +25,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MovieDetailActivity extends AppCompatActivity {
-    private int movieId;
+    private int movieId, releaseDate, duration;
+    private String title, poster, summary;
+    private float rating;
     private TextView movieTitle, movieRating, movieReleaseDate, movieDuration, movieSummary;
-    private ProgressBar movieProgressBar;
-    private NestedScrollView nestedScrollView;
     private ShapeableImageView posterNormalSize;
     private ImageView posterBigSize;
-    private Movie movie;
     private List<MovieVersion> movieVersions;
 
     @Override
@@ -44,16 +39,20 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
 
         movieId = getIntent().getIntExtra("id", 1);
+        releaseDate = getIntent().getIntExtra("releaseDate", 1);
+        duration = getIntent().getIntExtra("duration", 1);
+        title = getIntent().getStringExtra("title");
+        poster = getIntent().getStringExtra("poster");
+        summary = getIntent().getStringExtra("summary");
+        rating = getIntent().getFloatExtra("rating", 1);
 
         initView();
-
-        sendRequestMovie();
+        setMovieInfo();
         sendRequestMovieVersion();
     }
 
     private void initView() {
         movieTitle = findViewById(R.id.movie_title);
-        movieProgressBar = findViewById(R.id.detail_loading);
         posterNormalSize = findViewById(R.id.poster_normal_img);
         posterBigSize = findViewById(R.id.poster_big_img);
         movieRating = findViewById(R.id.movie_rating);
@@ -62,30 +61,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         movieSummary = findViewById(R.id.movie_summary_info);
         ImageView backArrow = findViewById(R.id.imageView4);
         FloatingActionButton playArrow = findViewById(R.id.play_arrow);
-        nestedScrollView = findViewById(R.id.nested_detail_view);
 
         backArrow.setOnClickListener(v -> finish());
 
         playArrow.setOnClickListener(v -> openDialog());
-    }
-
-    private void sendRequestMovie() {
-        RequestQueue movieRequestQueue = VolleySingleton.getInstance(this).getRequestQueue();
-        movieProgressBar.setVisibility(View.VISIBLE);
-        nestedScrollView.setVisibility(View.GONE);
-
-
-        StringRequest movieStringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/movies/" + movieId, response -> {
-            movieProgressBar.setVisibility(View.GONE);
-            nestedScrollView.setVisibility(View.VISIBLE);
-
-            movie = new Gson().fromJson(response, Movie.class);
-
-            setMovieInfo();
-
-        }, error -> movieProgressBar.setVisibility(View.GONE));
-
-        movieRequestQueue.add(movieStringRequest);
     }
 
     private void sendRequestMovieVersion() {
@@ -106,13 +85,13 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void setMovieInfo() {
-        Glide.with(MovieDetailActivity.this).load(movie.getPoster()).into(posterNormalSize);
-        Glide.with(MovieDetailActivity.this).load(movie.getPoster()).into(posterBigSize);
+        Glide.with(MovieDetailActivity.this).load(poster).into(posterNormalSize);
+        Glide.with(MovieDetailActivity.this).load(poster).into(posterBigSize);
 
-        movieTitle.setText(movie.getTitle());
-        movieRating.setText(movie.getRating().toString());
-        movieDuration.setText(movie.getDuration().toString());
-        movieReleaseDate.setText(movie.getReleaseDate());
-        movieSummary.setText(movie.getSummary());
+        movieTitle.setText(title);
+        movieRating.setText(String.valueOf(rating));
+        movieDuration.setText(String.valueOf(duration));
+        movieReleaseDate.setText(String.valueOf(releaseDate));
+        movieSummary.setText(summary);
     }
 }

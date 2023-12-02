@@ -58,7 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
                 jsonBody.put("password", password);
                 String responseBody = jsonBody.toString();
 
-                StringRequest usersStringRequest = new StringRequest(Request.Method.PUT, "http://192.168.1.103:8080/users",
+                StringRequest usersStringRequest = new StringRequest(Request.Method.POST, "http://192.168.1.103:8080/users/register",
                         response -> startActivity(new Intent(RegisterActivity.this, MainActivity.class)),
                         error -> Toast.makeText(RegisterActivity.this, "Failed Register Attempt", Toast.LENGTH_SHORT).show()) {
                     @Override
