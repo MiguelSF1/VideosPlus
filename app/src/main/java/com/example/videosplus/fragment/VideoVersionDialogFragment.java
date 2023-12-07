@@ -19,7 +19,6 @@ import com.example.videosplus.object.MovieVersion;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class VideoVersionDialogFragment extends DialogFragment {
     private Spinner movieVersion;
@@ -42,7 +41,7 @@ public class VideoVersionDialogFragment extends DialogFragment {
         List<String> movieFormatsAndResolutions = new ArrayList<>();
 
         for (MovieVersion movieVersion : movieVersions) {
-            movieFormatsAndResolutions.add(movieVersion.getMovieFormat() + " " + movieVersion.getMovieResolution());
+            movieFormatsAndResolutions.add(movieVersion.getVersionId() + " " + movieVersion.getMovieFormat() + " " + movieVersion.getMovieResolution());
         }
 
         ArrayAdapter adapter = new ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, movieFormatsAndResolutions);
@@ -54,19 +53,14 @@ public class VideoVersionDialogFragment extends DialogFragment {
         }).setPositiveButton("Play", (dialog, which) -> {
             String selectedOption = (String) movieVersion.getSelectedItem();
             String[] selectedVersion = selectedOption.split(" ");
-            String selectedFormat = selectedVersion[0];
-            String selectedResolution = selectedVersion[1];
+            int versionId = Integer.parseInt(selectedVersion[0]);
 
             for (MovieVersion movieVersion : movieVersions) {
-               if (Objects.equals(movieVersion.getMovieFormat(), selectedFormat) && Objects.equals(movieVersion.getMovieResolution(), selectedResolution)) {
+               if (versionId == movieVersion.getVersionId()) {
                    Intent intent = new Intent(activity, PlayerActivity.class);
-                   intent.putExtra("id", movieVersion.getVersionId());
-                   intent.putExtra("movieId", movieVersion.getMovieId());
-                   intent.putExtra("movieFormat", movieVersion.getMovieFormat());
-                   intent.putExtra("movieResolution", movieVersion.getMovieResolution());
                    intent.putExtra("movieLink", movieVersion.getMovieLink());
                    startActivity(intent);
-                    break;
+                   break;
                 }
             }
         });
