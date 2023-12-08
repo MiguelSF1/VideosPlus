@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 usersRequestQueue.add(usersStringRequest);
             } catch (JSONException e) {
-                throw new RuntimeException(e);
+                Toast.makeText(RegisterActivity.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
