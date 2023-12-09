@@ -69,7 +69,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private void sendRequestMovieVersion() {
         RequestQueue movieRequestQueue = VolleySingleton.getInstance(this).getRequestQueue();
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://192.168.1.103:8080/movieVersions/" + movieId, response -> {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://34.34.73.78:8080/movieVersions/" + movieId, response -> {
             Type listType = new TypeToken<ArrayList<MovieVersion>>(){}.getType();
             movieVersions = new Gson().fromJson(response, listType);
 
